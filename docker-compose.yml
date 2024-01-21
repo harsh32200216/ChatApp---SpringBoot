@@ -1,0 +1,30 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo:4.4
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: harsh  
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongodb_web_client
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: harsh
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123456 
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb:27017/
+    depends_on:
+      - mongo
+      
+volumes:
+  mongo: {}
