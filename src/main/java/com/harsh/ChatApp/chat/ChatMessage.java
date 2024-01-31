@@ -1,6 +1,5 @@
 package com.harsh.ChatApp.chat;
 
-import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
@@ -23,6 +22,6 @@ public class ChatMessage {
     private String senderId;
     private String recipientId;
     private String content;
-    private Date timestamp;
+    private String timestamp;
 
 }

@@ -42,6 +42,9 @@ async function connect(event){
             alert("Invalid credentials.")
         }
     }
+    else{
+        alert("Error")
+    }
 }
 
 async function register(event) {
@@ -161,7 +164,7 @@ function userItemClick(event) {
     nbrMsg.textContent = '0';
 }
 
-function displayMessage(senderId, content, timestamp) {
+function displayMessage(senderId, content, time) {
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message');
     if (senderId === nickname) {
@@ -172,7 +175,6 @@ function displayMessage(senderId, content, timestamp) {
     }
     const message = document.createElement('p');
     message.textContent = content;
-    const time = timestamp.toString();
     const tim = document.createElement('p');
     tim.classList.add('mini');
     tim.textContent = time.substring(11,16) + ", " + time.substring(0,10);
@@ -198,15 +200,16 @@ function onError() {
 
 function sendMessage(event) {
     const messageContent = messageInput.value.trim();
+    const date = new Date().toISOString();
     if (messageContent && stompClient) {
         const chatMessage = {
             senderId: nickname,
             recipientId: selectedUserId,
             content: messageInput.value.trim(),
-            timestamp: new Date()
+            timestamp: date
         };
         stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
-        displayMessage(nickname, messageInput.value.trim(), new Date());
+        displayMessage(nickname, messageInput.value.trim(), date);
         messageInput.value = '';
     }
     chatArea.scrollTop = chatArea.scrollHeight;
